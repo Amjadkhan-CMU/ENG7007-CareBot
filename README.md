@@ -5,10 +5,10 @@
 ## Student Name - Md Amjad Hossain Khan
 
 ## Team Members
-- Md Amjad Hossain Khan (ST20341331)
-- Andrew Martin (ST20339453)
-- Sarah Pauwels (ST20317166)
-- Omar Adel Yahya Khalifa Mohamed (ST20344903)
+- Md Amjad Hossain Khan (st20341331)
+- Andrew Martin (st20339453)
+- Sarah Pauwels (st20317166)
+- Omar Adel Yahya Khalifa Mohamed (st20344903)
 
 ## Project Description
 Care-Bot is a NAO V6 humanoid robot programme designed to assist 
