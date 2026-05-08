@@ -20,17 +20,16 @@ class MyClass(GeneratedClass):
         self.wordQueue = []
 
     def onLoad(self):
-        # setting up all the services i need
+        # settings up all the services i need
         self.tts = self.session().service("ALTextToSpeech")
         self.leds = self.session().service("ALLeds")
         self.memory = self.session().service("ALMemory")
         self.asr = self.session().service("ALSpeechRecognition")
         self.posture = self.session().service("ALRobotPosture")
 
-        # pause asr before configuring
+        # pause asr before configuring all
         self.asr.pause(True)
         self.asr.setLanguage("English")
-        # words the robot will listen for
         self.asr.setVocabulary(["yes", "no", "ready", "repeat", "stop"], False)
         self.asr.pause(False)
         self.asr.subscribe("ScheduleASR")
@@ -44,7 +43,6 @@ class MyClass(GeneratedClass):
         self.speechSubscriber.signal.connect(self.onWordRecognized)
 
     def onUnload(self):
-        # stop asr when programme ends
         try:
             self.asr.pause(True)
             self.asr.unsubscribe("ScheduleASR")
@@ -53,45 +51,34 @@ class MyClass(GeneratedClass):
             pass
 
     def onHeadTouched(self, value):
-        # value 1 means touched, 0 means released
-        # scheduleStarted and isRunning stops it running twice
+        # only trigger once
         if value == 1 and not self.scheduleStarted and not self.isRunning:
             self.scheduleStarted = True
             self.isRunning = True
             self.runSchedule()
 
     def onWordRecognized(self, value):
-        # ignore if schedule hasnt started yet
         if not self.scheduleStarted:
             return
-
-        # ignore if robot is already talking
         if self.isRunning:
             return
-
-        # ignore empty results or noise
         if not value or len(value) < 2:
             return
         if value[0] == "" or value[0] == "<...>":
             return
-
-        # only accept if confidence is above 55%
         if value[1] < 0.55:
             return
 
         word = value[0].lower()
 
-        # add to queue only if queue is empty
+        # add to queue, only if queue is empty
         if word not in self.wordQueue:
             self.wordQueue.append(word)
             self.processWord()
 
     def processWord(self):
-        # if nothing in queue just return
         if not self.wordQueue:
             return
-
-        # if robot is already talking clear queue and return
         if self.isRunning:
             self.wordQueue = []
             return
@@ -129,7 +116,6 @@ class MyClass(GeneratedClass):
         self.isRunning = False
 
     def saySchedule(self):
-        # this just says all the activities one by one
         self.tts.say("8am, Breakfast in the dining room.")
         self.tts.say("10am, Morning exercise with the physiotherapist.")
         self.tts.say("12pm, Lunch is served.")
@@ -139,16 +125,12 @@ class MyClass(GeneratedClass):
     def runSchedule(self):
         import datetime
         try:
-            # stand up when head is touched
             self.posture.goToPosture("StandInit", 0.5)
-
-            # white eyes for greeting
             self.leds.fadeRGB("FaceLeds", 0xFFFFFF, 0.5)
             self.tts.setParameter("speed", 80)
             self.tts.say("Good morning! I am your care assistant today.")
             self.tts.say("You can say yes, no, repeat, or stop at any time.")
 
-            # check what time it is and say the right activity
             current_hour = datetime.datetime.now().hour
 
             if 6 <= current_hour < 10:
@@ -162,23 +144,19 @@ class MyClass(GeneratedClass):
             else:
                 self.tts.say("It is evening time. Dinner will be served shortly.")
 
-            # blue eyes while reading the schedule
             self.leds.fadeRGB("FaceLeds", 0x0000FF, 0.5)
             self.tts.say("Here is your full schedule for today.")
             self.saySchedule()
 
-            # yellow eyes means robot is listening now
             self.leds.fadeRGB("FaceLeds", 0xFFFF00, 0.5)
             self.tts.say("Are you ready to start your day? Please say yes or no.")
 
         except Exception as e:
             pass
 
-        # unlock so speech recognition works now
         self.isRunning = False
 
     def onInput_onStart(self):
-        # robot crouches first then waits for head touch
         self.posture.goToPosture("Crouch", 0.5)
         self.leds.fadeRGB("FaceLeds", 0xFF00FF, 0.5)
         self.tts.say("Hello, I'm Lily your carebot! Please touch my head to begin today's schedule.")
