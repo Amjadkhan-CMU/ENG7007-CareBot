@@ -36,9 +36,9 @@ NAO V6 - Choregraphe 2.8.7.4
 - Time based activity announcement
 - Full daily schedule reading
 - Speech recognition for yes, no, repeat, stop commands
+- LED colour feedback throughout
 
 ## Flow Chart
 <img width="675" height="682" alt="FLowchart" src="https://github.com/user-attachments/assets/e5b389ca-58bf-4a04-b929-e9dbb3cbc348" />
 
 
-- LED colour feedback throughout
