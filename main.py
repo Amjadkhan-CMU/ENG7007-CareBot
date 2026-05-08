@@ -2,7 +2,7 @@ import threading
 
 # Care-Bot: Daily Schedule Coordinator for Elderly Care
 # ENG7007 - Applications for Social and Service Robots
-# Cardiff Metropolitan University 2025-26
+# Module Leader - Dr Jiaji Yang
 # Student: Md Amjad Hossain Khan (st20341331)
 
 class MyClass(GeneratedClass):
