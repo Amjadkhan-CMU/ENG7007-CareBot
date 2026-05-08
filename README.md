@@ -28,9 +28,17 @@ NAO V6 - Choregraphe 2.8.7.4
 6. Connect Python box onStopped to Robot onStopped
 7. Press play
 
+## Empathy Map
+<img width="813" height="676" alt="Empathy Map" src="https://github.com/user-attachments/assets/b36c368d-f240-4146-b9de-431430f6cecb" />
+
 ## Programme Features
 - Head touch sensor to start the programme
 - Time based activity announcement
 - Full daily schedule reading
 - Speech recognition for yes, no, repeat, stop commands
+
+## Flow Chart
+<img width="675" height="682" alt="FLowchart" src="https://github.com/user-attachments/assets/e5b389ca-58bf-4a04-b929-e9dbb3cbc348" />
+
+
 - LED colour feedback throughout
